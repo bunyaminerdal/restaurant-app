@@ -1,14 +1,20 @@
 # Getting Started with Restaurant App
 
-#### `cd transparent-restaurant`
+```sh
+cd transparent-restaurant
+```
 
-#### `npm install`
-#### `npm start`
+```sh
+npm install #install node_modules
+```
 
-Runs the app in the development mode.\
+```sh
+npm run start #run in the development mode
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-# Available Libraries
+# Libraries
 
 ### Material UI 
 
