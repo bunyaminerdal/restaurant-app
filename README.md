@@ -1,13 +1,21 @@
 # Getting Started with Restaurant App
 
+Clone repository to your locale
 ```sh
-cd transparent-restaurant
+git clone https://github.com/bunyaminerdal/bunyamin-erdal-otsimo-frontend-task-2023.git
 ```
 
+Go to project folder
 ```sh
-npm install #install node_modules
+cd bunyamin-erdal-otsimo-frontend-task-2023
 ```
 
+Intall node modules
+```sh
+npm install
+```
+
+Run app in the development mode
 ```sh
 npm run start #run in the development mode
 ```
