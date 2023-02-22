@@ -5,7 +5,7 @@ import React from "react";
 import { getIngredientList, getMealList } from "../services/restourantService";
 import { Ingredient, Meal } from "../types/types";
 import SearchIcon from "@mui/icons-material/Search";
-import MealCard from "../components/MealCard";
+import MenuItemCard from "../components/MenuItemCard";
 
 const MenuPage = () => {
   const [mealList, setMealList] = React.useState<Meal[]>();
@@ -61,7 +61,7 @@ const MenuPage = () => {
         }}
       >
         {meals?.map((meal) => {
-          return <MealCard meal={meal as Meal} key={meal.id} />;
+          return <MenuItemCard meal={meal as Meal} key={meal.id} />;
         })}
       </Container>
     </Container>

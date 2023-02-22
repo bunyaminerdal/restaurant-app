@@ -9,6 +9,9 @@ import MenuPage from "./pages/MenuPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import Custom404Page from "./pages/404";
+import MealPage from "./pages/MealPage";
+import BasketPage from "./pages/BasketPage";
+import BasketContextProvider from "./state/BasketContextProvider";
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
@@ -50,6 +53,14 @@ const App = () => {
           element: <MenuPage />,
         },
         {
+          path: "menu/:mealId",
+          element: <MealPage />,
+        },
+        {
+          path: "basket",
+          element: <BasketPage />,
+        },
+        {
           path: "about",
           element: <AboutPage />,
         },
@@ -67,7 +78,9 @@ const App = () => {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <RouterProvider router={router} />
+          <BasketContextProvider>
+            <RouterProvider router={router} />
+          </BasketContextProvider>
         </ThemeProvider>
       </ColorModeContext.Provider>
     </div>

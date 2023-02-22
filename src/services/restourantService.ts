@@ -12,3 +12,10 @@ export const getIngredientList = async () => {
   );
   return data;
 };
+
+export const getMealById = async (mealId: string) => {
+  const { data } = await axios.get(
+    `https://apis.career.otsimo.xyz/api/restaurant/get/${mealId}`
+  );
+  return data;
+};

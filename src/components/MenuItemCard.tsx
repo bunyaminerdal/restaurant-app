@@ -7,12 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Meal } from "../types/types";
 
-const MealCard = ({ meal }: { meal: Meal }) => {
+const MenuItemCard = ({ meal }: { meal: Meal }) => {
+  const navigate = useNavigate();
   return (
-    <Container key={meal.id + "-container"}>
+    <Container key={meal?.id + "-container"}>
       <Button
+        onClick={() => navigate(`/menu/${meal?.id}`)}
         sx={{
           width: "100%",
           display: "flex",
@@ -96,4 +99,4 @@ const MealCard = ({ meal }: { meal: Meal }) => {
   );
 };
 
-export default MealCard;
+export default MenuItemCard;

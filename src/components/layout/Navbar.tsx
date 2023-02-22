@@ -11,10 +11,11 @@ import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import { Badge, Link } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useNavigate } from "react-router-dom";
+import { BasketContext } from "../../state/BasketContextProvider";
 
 function Navbar() {
   const navigate = useNavigate();
-
+  const { state } = React.useContext(BasketContext);
   return (
     <AppBar>
       <Container maxWidth="xl">
@@ -51,10 +52,17 @@ function Navbar() {
             <Tooltip title="Basket">
               <IconButton
                 color="inherit"
-                onClick={() => console.log("navbar icon clicked")}
+                onClick={() => {
+                  if (state?.meals?.length > 0) navigate("/basket");
+                  else navigate("/menu");
+                }}
                 sx={{ p: 0, height: "50px", width: "50px" }}
               >
-                <Badge color="secondary" badgeContent={15} max={9}>
+                <Badge
+                  color="secondary"
+                  badgeContent={state?.meals?.length}
+                  max={9}
+                >
                   <ShoppingBasketIcon />
                 </Badge>
               </IconButton>
