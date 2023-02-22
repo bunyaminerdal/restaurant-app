@@ -33,10 +33,10 @@ function Navbar() {
             }}
           >
             <Typography sx={{ fontSize: { xs: 14, md: 20 } }}>
-              {"TRANSPARENT"}
+              {"KEÇİÖREN"}
             </Typography>
             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>
-              {"RESTAURANT"}
+              {"ASPAVA"}
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex" } }}>

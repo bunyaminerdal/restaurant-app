@@ -1,4 +1,4 @@
-# Getting Started with Restaurant App
+# Getting Started with App
 
 Clone repository to your locale
 ```sh
@@ -37,3 +37,18 @@ react-router-dom [https://reactrouter.com/](https://reactrouter.com/)
 ### Axios
 
 Axios [https://axios-http.com/](https://axios-http.com/)
+
+# App Description
+this project is a front-end for restaurant app.
+Our restaurant called `Keçiören ASPAVA` which is one of the most popular restourant in [ANKARA](https://tr.wikipedia.org/wiki/Ankara)
+city. if you dont come with high expectation, we ensure to left hapy and full stomach.
+
+# Technical Information
+
+* State management => I prefered to use React ContextAPI and useReducer hook for simpifity.  
+
+* Styling => mostly inline styling with MUI builtin components.
+
+* Theme => theme switch funcionality added because of why not :D 
+
+* Page navigation => react-router-dom help us for page navigation with usefull hooks like 
