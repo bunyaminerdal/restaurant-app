@@ -6,6 +6,7 @@ import { getIngredientList, getMealList } from "../services/restourantService";
 import { Ingredient, Meal } from "../types/types";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuItemCard from "../components/MenuItemCard";
+import Stack from "@mui/material/Stack";
 
 const MenuPage = () => {
   const [mealList, setMealList] = React.useState<Meal[]>();
@@ -39,20 +40,36 @@ const MenuPage = () => {
 
   if (!meals || !mealList || !ingredientList) return null; // TODO: add a proper loading screen or skeleton
   return (
-    <Container sx={{ height: "100%" }}>
-      <Container maxWidth="md" sx={{ height: { xs: "8%", md: "6%" } }}>
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-          <TextField
-            label="Search Meal"
-            variant="standard"
-            sx={{ width: "300px" }}
-          />
-        </Box>
+    <Stack sx={{ height: "100%" }}>
+      <Container
+        sx={{
+          height: { xs: "8%", md: "6%" },
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+            <TextField
+              label="Search Meal"
+              variant="standard"
+              sx={{ width: "300px" }}
+            />
+          </Box>
+        </Container>
       </Container>
-      <Divider sx={{ margin: "10px 0 10px 0" }} />
+
+      <Divider sx={{ margin: "0 0 10px 0" }} />
       <Container
         sx={{
           height: { xs: "90%", md: "92%" },
@@ -64,7 +81,7 @@ const MenuPage = () => {
           return <MenuItemCard meal={meal as Meal} key={meal.id} />;
         })}
       </Container>
-    </Container>
+    </Stack>
   );
 };
 

@@ -38,7 +38,6 @@ const BasketPage = () => {
   return (
     <Stack sx={{ height: "100%" }}>
       <Container
-        maxWidth="md"
         sx={{
           height: { xs: "8%", md: "6%" },
           display: "flex",
@@ -46,12 +45,21 @@ const BasketPage = () => {
           alignItems: "center",
         }}
       >
-        <Typography>BASKET</Typography>
-        <Button size="small" onClick={() => handleOrderNow()}>
-          Order Now
-        </Button>
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography>BASKET</Typography>
+          <Button size="small" onClick={() => handleOrderNow()}>
+            Order Now
+          </Button>
+        </Container>
       </Container>
-      <Divider sx={{ margin: "10px 0 10px 0" }} />
+
+      <Divider sx={{ margin: "0 0 10px 0" }} />
       <Container
         sx={{
           height: { xs: "90%", md: "92%" },

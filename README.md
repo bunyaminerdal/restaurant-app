@@ -39,7 +39,7 @@ react-router-dom [https://reactrouter.com/](https://reactrouter.com/)
 Axios [https://axios-http.com/](https://axios-http.com/)
 
 # App Description
-this project is a front-end for restaurant app.
+This project is front-end for restaurant app that has designed according to mobile first approach.
 Our restaurant called `Keçiören ASPAVA` which is one of the most popular restourant in [ANKARA](https://tr.wikipedia.org/wiki/Ankara)
 city. if you dont come with high expectation, we ensure to left hapy and full stomach.
 

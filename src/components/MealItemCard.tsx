@@ -17,6 +17,7 @@ import { Meal, QualityMap } from "../types/types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BasketContext } from "../state/BasketContextProvider";
 import { BasketActionMap } from "../state/basketState";
+import CardHeader from "@mui/material/CardHeader";
 
 /**
  * this component will be more proper if we use real form structure with react-hook-form
@@ -83,11 +84,19 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
   return (
     <Container sx={{ padding: "10px" }}>
       <Card variant="outlined">
-        <CardContent>
-          <Typography sx={{ fontSize: { xs: 16, md: 22 } }} gutterBottom>
-            {mealWithQualityIngredients?.name}
-          </Typography>
+        <CardHeader
+          title={
+            <Typography sx={{ fontSize: { xs: 16, md: 22 } }}>
+              {mealWithQualityIngredients?.name}
+            </Typography>
+          }
+          sx={{ padding: "10px 10px 0 10px" }}
+        />
+        <CardContent sx={{ padding: "10px" }}>
           <Stack>
+            <Typography sx={{ fontSize: { xs: 12, md: 18 } }}>
+              Ingredients:
+            </Typography>
             {mealWithQualityIngredients?.ingredients.map((ingredient) => {
               return (
                 <FormControl key={ingredient.name}>
@@ -164,7 +173,7 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
           </Stack>
         </CardContent>
         {isSingleMeal ? (
-          <CardActions>
+          <CardActions sx={{ padding: "10px" }}>
             <Button size="small" onClick={() => handleAddBasket()}>
               Add to Basket
             </Button>
