@@ -14,7 +14,8 @@ export type Ingredient = {
   groups: string[];
   options: IngredientOption[];
   quantity: number;
-  quantity_type: string; //TODO:this should be a string union or enum
+  quantity_type: string; //TODO:this should be a string union or enum if I need to use
+  selectedQuality: IngredientOption | undefined;
 };
 export type Meal = {
   id: number;

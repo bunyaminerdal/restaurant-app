@@ -28,7 +28,7 @@ export interface BasketState {
 export function basketReducer(state: BasketState, action: BasketActions) {
   const { type, payload } = action;
   switch (type) {
-    case BasketActionMap.ADD:
+    case BasketActionMap.ADD: //TODO: we should handle meal count
       return {
         ...state,
         meals: [...state.meals, payload],

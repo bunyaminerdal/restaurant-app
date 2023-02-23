@@ -12,6 +12,7 @@ import Custom404Page from "./pages/404";
 import MealPage from "./pages/MealPage";
 import BasketPage from "./pages/BasketPage";
 import BasketContextProvider from "./state/BasketContextProvider";
+import OrderPage from "./pages/OrderPage";
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
@@ -59,6 +60,10 @@ const App = () => {
         {
           path: "basket",
           element: <BasketPage />,
+        },
+        {
+          path: "order",
+          element: <OrderPage />,
         },
         {
           path: "about",
