@@ -1,3 +1,8 @@
+export enum DietaryPreferencesMap {
+  "none" = "",
+  "vegan" = "vegan",
+  "vegetarian" = "vegetarian",
+}
 export enum QualityMap {
   "low" = "low",
   "medium" = "medium",
@@ -11,7 +16,7 @@ export type IngredientOption = {
 };
 export type Ingredient = {
   name: string;
-  groups: string[];
+  groups: DietaryPreferencesMap[];
   options: IngredientOption[];
   quantity: number;
   quantity_type: string; //TODO:this should be a string union or enum if I need to use
@@ -21,4 +26,5 @@ export type Meal = {
   id: number;
   name: string;
   ingredients: Ingredient[];
+  dietaryPreference: DietaryPreferencesMap[];
 };
