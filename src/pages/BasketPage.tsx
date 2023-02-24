@@ -53,9 +53,14 @@ const BasketPage = () => {
           }}
         >
           <Typography>BASKET</Typography>
-          <Button size="small" onClick={() => handleOrderNow()}>
-            Order Now
-          </Button>
+          <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
+            <Typography sx={{ fontSize: { xs: 12, md: 16 } }}>
+              {"Total Price: " + state.totalPrice?.toFixed(2) + "$"}
+            </Typography>
+            <Button size="small" onClick={() => handleOrderNow()}>
+              Order Now
+            </Button>
+          </Stack>
         </Container>
       </Container>
 

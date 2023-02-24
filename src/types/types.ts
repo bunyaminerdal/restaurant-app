@@ -27,4 +27,7 @@ export type Meal = {
   name: string;
   ingredients: Ingredient[];
   dietaryPreference: DietaryPreferencesMap[];
+  minPrice: number;
+  maxPrice: number;
+  price: number;
 };

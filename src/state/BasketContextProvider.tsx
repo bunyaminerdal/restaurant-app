@@ -10,7 +10,10 @@ export default function BasketContextProvider({
 }: {
   children: JSX.Element;
 }) {
-  const [state, dispatch] = React.useReducer(basketReducer, { meals: [] });
+  const [state, dispatch] = React.useReducer(basketReducer, {
+    meals: [],
+    totalPrice: 0,
+  });
   return (
     <BasketContext.Provider value={{ state, dispatch }}>
       {children}

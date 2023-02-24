@@ -2,7 +2,13 @@ import { Divider, Button } from "@mui/material";
 import Container from "@mui/material/Container";
 import React from "react";
 import { getIngredientList, getMealList } from "../services/restourantService";
-import { DietaryPreferencesMap, Ingredient, Meal } from "../types/types";
+import {
+  DietaryPreferencesMap,
+  Ingredient,
+  IngredientOption,
+  Meal,
+  QualityMap,
+} from "../types/types";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuItemCard from "../components/MenuItemCard";
 import Stack from "@mui/material/Stack";
@@ -35,9 +41,41 @@ const availableDietaryPreferences = (meal: Meal) => {
   return availableDietaryPreferences;
 };
 
+export const rangedPriceCalc = (meal: Meal, priceType: "min" | "max") => {
+  if (!meal) return 1;
+  const lowIngredientsPrice = meal.ingredients
+    .map((ing) => {
+      const lowOption = ing.options?.find(
+        (o) => o.quality === QualityMap.low
+      ) as IngredientOption;
+      return (ing.quantity / 1000) * lowOption?.price + 0.1;
+    })
+    .reduce((prev, cur) => prev + cur, 0);
+
+  const highIngredientsPrice = meal.ingredients
+    .map((ing) => {
+      const highOption = ing.options?.find(
+        (o) => o.quality === QualityMap.high
+      ) as IngredientOption;
+      return (ing.quantity / 1000) * highOption?.price;
+    })
+    .reduce((prev, cur) => prev + cur, 0);
+
+  switch (priceType) {
+    case "min":
+      return lowIngredientsPrice;
+    case "max":
+      return highIngredientsPrice;
+    default:
+      return 1;
+  }
+};
+
 const MenuPage = () => {
   const [mealList, setMealList] = React.useState<Meal[]>();
-  const [ingredientList, setIngredientList] = React.useState<Ingredient[]>();
+  const [ingredientList, setIngredientList] = React.useState<Ingredient[]>(
+    [] as Ingredient[]
+  );
   const [searchTerm, setSearchTerm] = React.useState("");
   const [sortDir, setSortDir] = React.useState(SortDirectionsMap.normal);
   const [dietaryPreference, setDietaryPreference] = React.useState(
@@ -58,21 +96,34 @@ const MenuPage = () => {
         ?.map((meal) => {
           return {
             ...meal,
-            ingredients: meal.ingredients.map((ing) =>
-              ingredientList?.find((i) => i.name === ing.name)
-            ),
+            ingredients: meal.ingredients.map((ing) => {
+              return {
+                ...ing,
+                ...(ingredientList?.find(
+                  (i) => i.name === ing.name
+                ) as Ingredient),
+              };
+            }),
           };
         })
         .map((meal) => {
           return {
             ...meal,
-            dietaryPreference: availableDietaryPreferences(meal as Meal),
+            dietaryPreference: availableDietaryPreferences(meal),
+          };
+        })
+        .map((meal) => {
+          return {
+            ...meal,
+            minPrice: rangedPriceCalc(meal, "min"),
+            maxPrice: rangedPriceCalc(meal, "max"),
           };
         }),
     [ingredientList, mealList]
   );
 
   //TODO: search should be debounced or trigger by Enter key
+  //TODO: extend search by ingredient names
   const searchedMeals = meals?.filter((meal) =>
     meal.name.toLowerCase().includes(searchTerm)
   );
@@ -87,7 +138,7 @@ const MenuPage = () => {
       : SortedMeals;
 
   const handleSortButton = () => {
-    //Sorting circle normal -> asc -> desc -> normal
+    //HACK: Sorting circle normal -> asc -> desc -> normal
     switch (sortDir) {
       case SortDirectionsMap.normal:
         setSortDir(SortDirectionsMap.asc);

@@ -35,7 +35,11 @@ const MenuItemCard = ({ meal }: { meal: Meal }) => {
                 <Typography
                   fontWeight={700}
                   textTransform="capitalize"
-                  sx={{ fontSize: { xs: 12, md: 22 }, display: "flex" }}
+                  sx={{
+                    fontSize: { xs: 12, md: 22 },
+                    display: "flex",
+                    textAlign: "left",
+                  }}
                 >
                   {meal?.name}
                 </Typography>
@@ -83,12 +87,23 @@ const MenuItemCard = ({ meal }: { meal: Meal }) => {
                 </Stack>
               </Container>
             </Stack>
-            <Stack display="flex" justifyContent="center" alignItems="center">
+            <Stack
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minWidth="70px"
+            >
               <Typography
                 textTransform="capitalize"
                 sx={{ fontSize: { xs: 12, md: 22 }, display: "flex" }}
               >
-                {"Price"}
+                {"Price Range"}
+              </Typography>
+              <Typography
+                textTransform="capitalize"
+                sx={{ fontSize: { xs: 11, md: 20 }, display: "flex" }}
+              >
+                {meal.minPrice.toFixed(2)}$ - {meal.maxPrice.toFixed(2)}$
               </Typography>
             </Stack>
           </Stack>

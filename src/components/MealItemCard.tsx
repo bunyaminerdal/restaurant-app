@@ -13,12 +13,49 @@ import {
   FormLabel,
   Stack,
 } from "@mui/material";
-import { Meal, QualityMap } from "../types/types";
+import { IngredientOption, Meal, QualityMap } from "../types/types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BasketContext } from "../state/BasketContextProvider";
 import { BasketActionMap } from "../state/basketState";
 import CardHeader from "@mui/material/CardHeader";
+import { rangedPriceCalc } from "../pages/MenuPage";
+import { Link } from "react-router-dom";
 
+const selectedPriceCalc = (
+  meal: Meal,
+  ingredientName: string,
+  ingredientQuality: QualityMap
+) => {
+  if (!meal) return 1;
+  const selectedIngredientsPrice = meal.ingredients
+    .map((ing) => {
+      if (ing.name === ingredientName) {
+        let aditionalCost = 0;
+        switch (ingredientQuality) {
+          case QualityMap.low:
+            aditionalCost = 0.1;
+            break;
+          case QualityMap.medium:
+            aditionalCost = 0.05;
+            break;
+          default:
+            aditionalCost = 0;
+            break;
+        }
+        const selectedOption = ing.options.find(
+          (o) => o.quality === ingredientQuality
+        ) as IngredientOption;
+
+        return (ing.quantity / 1000) * selectedOption.price + aditionalCost;
+      }
+      const highOption = ing.options.find(
+        (o) => o.quality === QualityMap.high
+      ) as IngredientOption;
+      return (ing.quantity / 1000) * highOption.price;
+    })
+    .reduce((prev, cur) => prev + cur, 0);
+  return selectedIngredientsPrice;
+};
 /**
  * this component will be more proper if we use real form structure with react-hook-form
  */
@@ -34,6 +71,9 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
   React.useEffect(() => {
     setMealWithQualityIngredients({
       ...meal,
+      minPrice: meal.minPrice ?? rangedPriceCalc(meal, "min"),
+      maxPrice: meal.maxPrice ?? rangedPriceCalc(meal, "max"),
+      price: meal.price ?? rangedPriceCalc(meal, "max"),
       ingredients: meal?.ingredients.map((ing) => {
         return {
           ...ing,
@@ -46,9 +86,14 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
   }, [meal]);
 
   const handleChange = (value: string, ingredientName: string) => {
-    if (mealWithQualityIngredients)
+    if (mealWithQualityIngredients) {
       setMealWithQualityIngredients({
         ...mealWithQualityIngredients,
+        price: selectedPriceCalc(
+          mealWithQualityIngredients,
+          ingredientName,
+          value as QualityMap
+        ),
         ingredients: mealWithQualityIngredients?.ingredients.map((ing) => {
           return {
             ...ing,
@@ -59,13 +104,38 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
           };
         }),
       });
+      if (!isSingleMeal)
+        dispatch({
+          type: BasketActionMap.ADD,
+          payload: {
+            ...mealWithQualityIngredients,
+            price: selectedPriceCalc(
+              mealWithQualityIngredients,
+              ingredientName,
+              value as QualityMap
+            ),
+            ingredients: mealWithQualityIngredients?.ingredients.map((ing) => {
+              return {
+                ...ing,
+                selectedQuality:
+                  ing.name === ingredientName
+                    ? ing.options.find(
+                        (o) => o.quality === (value as QualityMap)
+                      )
+                    : ing.selectedQuality,
+              };
+            }),
+          },
+        });
+    }
   };
   const handleAddBasket = () => {
-    if (mealWithQualityIngredients)
-      dispatch({
-        type: BasketActionMap.ADD,
-        payload: mealWithQualityIngredients,
-      });
+    if (!mealWithQualityIngredients) return;
+    dispatch({
+      type: BasketActionMap.ADD,
+      payload: mealWithQualityIngredients,
+    });
+    navigate("/basket");
   };
   const handleOrderNow = () => {
     navigate("/order");
@@ -81,6 +151,7 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
       });
   };
   if (!mealWithQualityIngredients) return null; //TODO: need proper loading
+
   return (
     <Container sx={{ padding: "10px" }}>
       <Card variant="outlined">
@@ -177,15 +248,31 @@ const MealItemCard = ({ meal }: { meal: Meal }) => {
             <Button size="small" onClick={() => handleAddBasket()}>
               Add to Basket
             </Button>
-            <Button size="small" onClick={() => handleOrderNow()}>
+            <Button
+              size="small"
+              onClick={() => handleOrderNow()}
+              sx={{ margin: "auto" }}
+            >
               Order Now
             </Button>
+            <Typography sx={{ fontSize: { xs: 12, md: 16 } }}>
+              {"Price: " + mealWithQualityIngredients.price?.toFixed(2) + "$"}
+            </Typography>
           </CardActions>
         ) : (
-          <CardActions>
+          <CardActions
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Button size="small" onClick={() => handleRemoveFromBasket()}>
               Remove From Basket
             </Button>
+            <Typography sx={{ fontSize: { xs: 12, md: 16 } }}>
+              {"Price: " + mealWithQualityIngredients.price?.toFixed(2) + "$"}
+            </Typography>
           </CardActions>
         )}
       </Card>
