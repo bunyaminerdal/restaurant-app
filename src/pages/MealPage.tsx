@@ -13,8 +13,11 @@ const MealPage = () => {
     if (mealId)
       getMealById(mealId)
         .then((data) => setMeal(data))
-        .catch((e) => console.log(e));
-  }, [mealId]);
+        .catch((e) => {
+          console.log(e);
+          navigate("/");
+        });
+  }, [mealId, navigate]);
   if (!meal) return null;
   return (
     <Stack sx={{ height: "100%" }}>

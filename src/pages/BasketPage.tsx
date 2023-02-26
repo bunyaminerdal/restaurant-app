@@ -20,12 +20,12 @@ const BasketPage = () => {
   };
   if (state.meals.length <= 0)
     return (
-      <Container>
+      <Container sx={{ height: "100%" }}>
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="100vh"
+          height="100%"
           flexDirection="column"
         >
           <Typography>Your Basket is empty!</Typography>
@@ -52,6 +52,13 @@ const BasketPage = () => {
             alignItems: "center",
           }}
         >
+          <Button
+            size="small"
+            onClick={() => navigate("/menu")}
+            sx={{ display: { xs: "none", md: "block" } }}
+          >
+            Back To Menu
+          </Button>
           <Typography>BASKET</Typography>
           <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
             <Typography sx={{ fontSize: { xs: 12, md: 16 } }}>

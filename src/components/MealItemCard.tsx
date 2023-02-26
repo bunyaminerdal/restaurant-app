@@ -19,7 +19,6 @@ import { BasketContext } from "../state/BasketContextProvider";
 import { BasketActionMap } from "../state/basketState";
 import CardHeader from "@mui/material/CardHeader";
 import { rangedPriceCalc } from "../pages/MenuPage";
-import { Link } from "react-router-dom";
 
 const selectedPriceCalc = (
   meal: Meal,

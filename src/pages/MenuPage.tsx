@@ -73,6 +73,7 @@ export const rangedPriceCalc = (meal: Meal, priceType: "min" | "max") => {
 
 const MenuPage = () => {
   const [mealList, setMealList] = React.useState<Meal[]>();
+  console.log("🚀 ~ file: MenuPage.tsx:76 ~ MenuPage ~ mealList:", mealList);
   const [ingredientList, setIngredientList] = React.useState<Ingredient[]>(
     [] as Ingredient[]
   );
