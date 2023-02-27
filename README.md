@@ -51,4 +51,6 @@ city. if you dont come with high expectation, we ensure to left hapy and full st
 
 * Theme => theme switch funcionality added because of why not :D 
 
-* Page navigation => react-router-dom help us for page navigation with usefull hooks like 
+* Page navigation => react-router-dom help us for page navigation with usefull hooks
+
+* Fetching data => axios
